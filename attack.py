@@ -21,14 +21,11 @@ class AttackManager:
         if (not self.attack):
             return
         frame_specific = self.attack in hasframes
-        print(self.attack_cool)
         connection_group = attack_connections.connections[self.attack] if not frame_specific else attack_connections.connections[self.attack][self.attack_cool]
         vertice_group = attack_vertices.vertices[self.attack] if not frame_specific else attack_vertices.vertices[self.attack][self.attack_cool]
         reg_vertices = [{'x': vertex[0], 'y': vertex[1]} for vertex in vertice_group]
         transformed_vertices = [{'x': self.dir * vertex['x'], 'y': -vertex['y']} for vertex in reg_vertices]
         moved_vertices = [{'x': self.x + self.width / 2 + vertex['x'], 'y': self.y + self.height / 2 + vertex['y']} for vertex in transformed_vertices]
-        print(vertice_group)
-        print(connection_group)
         lines.draw_items(DISPLAYSURF, connection_group, moved_vertices, "red")
 
     def update(self, x, y, attack, cool, dir):

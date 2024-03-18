@@ -147,10 +147,8 @@ shriek_7=[
 (-8,66),
 (8,66),
 (0,70),]
-shriek_1=[]
-shriek_2=[]
 dash = []
-shriek = [shriek_1, shriek_2, shriek_3, shriek_4, shriek_5, shriek_6, shriek_7, shriek_8, shriek_9]
+shriek = [[], [], shriek_3, shriek_4, shriek_5, shriek_6, shriek_7, shriek_8, shriek_9]
 shockwave = [shockwave_1, shockwave_2, shockwave_3, shockwave_4]
 vertices = {
     'slash': slash,

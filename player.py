@@ -113,15 +113,12 @@ class Player:
 
     def update2(self):
         # If the attack is over
-        if (self.attack and self.attack_cool == attacks_info[self.attack]['duration'] or 
+        if ((self.attack and self.attack_cool == attacks_info[self.attack]['duration'] - 1) or 
             (self.stun > 0 and attacks_info[self.attack]['stunnable'])):
             # Keep going until you hit the ground
             if (self.attack == 'dive' and self.air > 1):
-                self.attack_cool = 1
+                self.attack_cool = 0
             else:
-                # Limit attacks for next 2 frames
-                self.attack_cool = 2
-                self.attack = ''
                 # Shockwave once down
                 if (self.attack == 'dive'):
                     self.attack_cool = 0
@@ -130,6 +127,10 @@ class Player:
                 elif (self.attack == 'divestart'):
                     self.attack = 'dive'
                     self.attack_cool = 0
+                else:
+                    # Limit attacks for next 2 frames
+                    self.attack_cool = 2
+                    self.attack = ''
         elif (self.attack):
             self.attack_cool += 1
         else:
@@ -147,10 +148,12 @@ class Player:
             self.dx = constants.attacks[self.attack]['x'][self.attack_cool] * self.dir
         if (controlling_attack and constants.attacks[self.attack]['y']):
             self.dy = constants.attacks[self.attack]['y'][self.attack_cool]
-        elif not self.invincible:
+        if not self.invincible and not controlling_attack:
             self.dy += constants.gravity
         if (self.attack):
             self.invincible = attacks_info[self.attack]['invincible']
+        else:
+            self.invincible = False
         if (self.y > 480 or self.y < 0):
             self.x = constants.default_coords['x']
             self.y = constants.default_coords['y']
